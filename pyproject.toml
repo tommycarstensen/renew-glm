@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name        = "renew-glm"
-version     = "0.1.0"
+version     = "0.1.1"
 description = "Streaming generalized linear models with bounded memory."
 readme      = "README.md"
 license     = "GPL-2.0-or-later"
@@ -50,7 +50,7 @@ test = [
 [project.urls]
 Homepage   = "https://github.com/tommycarstensen/renew-glm"
 Repository = "https://github.com/tommycarstensen/renew-glm"
-"Algorithm reference (Luo & Song 2020)" = "https://doi.org/10.1111/rssb.12352"
+"Algorithm paper" = "https://doi.org/10.1111/rssb.12352"
 "Algorithm authors' R package"          = "https://github.com/luolsph/RenewGLM_pkg"
 
 [tool.hatch.build.targets.wheel]
