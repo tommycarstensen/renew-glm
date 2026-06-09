@@ -3,7 +3,7 @@
 **Streaming generalized linear models with bounded memory** -- a Python
 port of the renewable-estimation algorithm of Luo & Song (2020).
 
-![Cost trade-off at n=128M gaussian](https://raw.githubusercontent.com/tommycarstensen/renew-glm/main/docs/pareto.png)
+![GLM benchmark: cost, accuracy, scaling](https://raw.githubusercontent.com/tommycarstensen/renew-glm/main/docs/handout.png)
 
 ```python
 from renew_glm import RenewGLM
@@ -72,23 +72,21 @@ Across seven independent implementations spanning Python (NumPy / Numba
 / JAX), an in-memory Python competitor (glum), a distributed Python
 competitor (dask-glm), and a cross-language reference (R's biglm), the
 coefficient estimates agree to floating-point machine epsilon
-(`~1e-15`) on the largest workload we test.
-
-![Cross-method coefficient agreement at n=128M](https://raw.githubusercontent.com/tommycarstensen/renew-glm/main/docs/heatmap.png)
-
-Each cell shows `log10(max|beta_i - beta_j|)`. The renew-glm /
-dask-glm corners hit FP epsilon at -15; glum and biglm sit one order
-out at -10/-11 (algorithm-decomposition path, not convergence). The
-JAX entry uses `jax_enable_x64=True` -- the silent-float32 default
-would land an order of magnitude looser.
+(`~1e-15`) on the largest workload we test. The heatmap inset in the
+benchmark figure above shows pairwise `log10(max|beta_i - beta_j|)`:
+renew-glm hits FP epsilon (-15) against the streaming-Cholesky
+cluster; in-memory in-memory references (`glum`, `statsmodels`,
+`glm` (R)) sit one order out at -10/-11 (algorithm-decomposition
+path, not convergence). The JAX backend uses `jax_enable_x64=True`
+-- the silent-float32 default would land an order of magnitude
+looser.
 
 ## Scaling
 
-Wall time and peak RAM as `n` grows from 4M to 128M rows (cold runs;
-single 16 GB laptop). The in-memory baselines (statsmodels) terminate
-where they OOM; renew-glm and biglm keep going at bounded RAM.
-
-![Scaling: wall time and peak RAM vs n](https://raw.githubusercontent.com/tommycarstensen/renew-glm/main/docs/scaling.png)
+The right-side line panels in the benchmark figure show wall time
+and peak RAM as `n` grows from 1M to 128M rows (cold runs). The
+in-memory baselines (`statsmodels`, `glm` (R)) terminate at the
+OOM cliff (~9 GB); renew-glm stays flat at bounded RAM.
 
 ## Algorithm
 
