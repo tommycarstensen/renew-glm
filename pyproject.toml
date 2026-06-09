@@ -1,0 +1,57 @@
+[build-system]
+requires      = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name        = "renew-glm"
+version     = "0.1.0"
+description = "Streaming generalized linear models with bounded memory."
+readme      = "README.md"
+license     = "GPL-2.0-or-later"
+requires-python = ">=3.10"
+authors     = [
+    { name = "Tommy Carstensen" },
+]
+keywords = [
+    "glm",
+    "generalized linear models",
+    "streaming",
+    "incremental",
+    "out-of-core",
+    "biglm",
+    "renewable estimation",
+    "luo song",
+    "statistics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7",
+    "statsmodels>=0.14",
+]
+
+[project.urls]
+Homepage   = "https://github.com/tommycarstensen/renew-glm"
+Repository = "https://github.com/tommycarstensen/renew-glm"
+"Algorithm reference (Luo & Song 2020)" = "https://doi.org/10.1111/rssb.12352"
+"Algorithm authors' R package"          = "https://github.com/luolsph/RenewGLM_pkg"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/renew_glm"]
