@@ -32,6 +32,7 @@ Usage
 
 import numpy as np
 from scipy.linalg import LinAlgError, cho_factor, cho_solve
+from scipy.special import expit
 from scipy.stats import norm
 
 __all__ = ["RenewGLM"]
@@ -45,11 +46,11 @@ def _mu(eta, family):
     if family == "gaussian":
         return eta
     if family == "binomial":
-        return np.where(
-            eta >= 0,
-            1.0 / (1.0 + np.exp(-eta)),
-            np.exp(eta) / (1.0 + np.exp(eta)),
-        )
+        # expit is the numerically stable logistic sigmoid (one exp pass,
+        # sign-branch handled internally). The previous np.where computed
+        # BOTH 1/(1+exp(-eta)) and exp(eta)/(1+exp(eta)) over the full array
+        # -- two exp passes per call -- since np.where evaluates both arms.
+        return expit(eta)
     # poisson
     return np.exp(np.clip(eta, -500, 500))
 
@@ -59,7 +60,7 @@ def _weights(eta, family):
     if family == "gaussian":
         return np.ones(len(eta))
     if family == "binomial":
-        mu = _mu(eta, "binomial")
+        mu = expit(eta)
         return np.clip(mu * (1.0 - mu), 1e-15, None)
     # poisson
     return np.exp(np.clip(eta, -500, 500))
