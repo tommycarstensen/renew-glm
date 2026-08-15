@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "renew-glm: Streaming generalized linear models with bounded memory"
+abstract: >-
+  renew-glm fits generalized linear models on datasets larger than RAM using the
+  renewable estimation of Luo and Song (2020). One pass per iteration accumulates
+  the sufficient statistics, so peak memory scales with the number of covariates
+  rather than the number of observations. Gaussian, binomial and Poisson families,
+  agreeing with statsmodels to machine precision.
+type: software
+authors:
+  - family-names: Carstensen
+    given-names: Tommy
+    orcid: "https://orcid.org/0000-0002-3672-9931"
+    affiliation: "Benros Research Group"
+    email: "zenodo@tommycarstensen.com"
+version: "0.1.1"
+license: GPL-2.0-or-later
+repository-code: "https://github.com/tommycarstensen/renew-glm"
+url: "https://github.com/tommycarstensen/renew-glm"
+# No DOI yet. Enabling the Zenodo integration for this repository and cutting a
+# release mints a concept DOI, which then belongs here as a top-level `doi:`.
+references:
+  - type: article
+    title: "Renewable estimation and incremental inference in generalized linear models with streaming data sets"
+    authors:
+      - family-names: Luo
+        given-names: Lan
+      - family-names: Song
+        given-names: "Peter X.-K."
+    journal: "Journal of the Royal Statistical Society Series B"
+    year: 2020
+    volume: "82"
+    issue: "1"
+    start: 69
+    end: 97
+    doi: "10.1111/rssb.12352"
+keywords:
+  - generalized linear models
+  - streaming
+  - incremental
+  - out-of-core
+  - renewable estimation
+  - statistics
