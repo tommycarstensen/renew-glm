@@ -19,7 +19,9 @@ Public API:
               wrapper if you need them.
 """
 
+from importlib.metadata import version
+
 from renew_glm._irls import RenewGLM
 
 __all__ = ["RenewGLM"]
-__version__ = "0.1.0"
+__version__ = version("renew-glm")

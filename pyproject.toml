@@ -16,7 +16,6 @@ keywords = [
     "glm",
     "generalized linear models",
     "streaming",
-    "incremental",
     "out-of-core",
     "biglm",
     "renewable estimation",
