@@ -15,13 +15,18 @@ authors:
     orcid: "https://orcid.org/0000-0002-3672-9931"
     affiliation: "Benros Research Group"
     email: "zenodo@tommycarstensen.com"
-version: "0.1.2"
+version: "0.1.3"
 date-released: "2026-08-15"
 license: GPL-2.0-or-later
 repository-code: "https://github.com/tommycarstensen/renew-glm"
 url: "https://github.com/tommycarstensen/renew-glm"
-# No DOI yet. Enabling the Zenodo integration for this repository and cutting a
-# release mints a concept DOI, which then belongs here as a top-level `doi:`.
+# Concept DOI: always resolves to the latest version, so it need not change
+# per release. Version-specific DOIs are listed under identifiers.
+doi: "10.5281/zenodo.21950314"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21950315"
+    description: "Version DOI for v0.1.2"
 references:
   - type: article
     title: "Renewable estimation and incremental inference in generalized linear models with streaming data sets"

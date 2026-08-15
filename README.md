@@ -10,9 +10,10 @@ from renew_glm import RenewGLM
 
 # Streaming (recommended): one chunk at a time, never stores prior chunks.
 # Peak RAM is O(p^2 + chunk_size * p), independent of n.
+# chunk_fn is polled: return the next (X, y), or None when exhausted.
+chunks = iter(source_iter())                 # your (X, y) iterator
 def chunk_fn():
-    for X_chunk, y_chunk in source_iter():   # your generator
-        yield X_chunk, y_chunk               # X must include intercept column
+    return next(chunks, None)                # X must include intercept column
 
 model = RenewGLM(family="binomial").fit_streaming(chunk_fn)
 print(model.coef_, model.n_iter_)
@@ -25,10 +26,13 @@ model.fit()
 print(model.coef_, model.se_, model.pvalue_)
 ```
 
-`chunk_fn` is a zero-argument callable returning an iterator of `(X, y)`
-tuples. `fit_streaming` consumes the iterator once and discards each chunk
-after use; `partial_fit` + `fit` buffers all chunks in memory so it can
-compute `se_` and `pvalue_` like the R reference.
+`chunk_fn` is a zero-argument callable that is polled repeatedly: each
+call returns the next `(X, y)` tuple, and `None` once the data is
+exhausted. This is the `biglm::bigglm` callback pattern, not a generator.
+`fit_streaming` releases each chunk before asking for the next, so peak
+RAM is `O(p^2 + chunk_size * p)`; `partial_fit` + `fit` instead buffers
+every chunk in memory, which is what lets it compute `se_` and `pvalue_`
+like the R reference.
 
 Supports gaussian, binomial, and poisson families. Coefficients converge to
 the maximum-likelihood point of the full data; agreement with
@@ -129,9 +133,11 @@ Deferred to keep the first release minimal; pull requests welcome.
   and feed the resulting arrays to `partial_fit` / `fit_streaming`.
 - **Gamma + inverse-Gaussian families** -- the algorithm generalises
   (any exponential-dispersion family with a known link works), but
-  the test suite only covers gaussian / binomial / poisson. Adding a
-  family is ~10 LOC of weight + mu functions in `_irls.py` plus a
-  test case.
+  the test suite only covers gaussian / binomial / poisson. The weight
+  and mu functions in `_irls.py` are a few lines each; the real work is
+  dispersion, which is currently special-cased to gaussian, while the
+  standard errors for every other family assume dispersion 1. Both
+  need extending before either family is usable.
 - **Optional Cholesky -> Givens-QR path** -- the current code uses
   `scipy.linalg.cho_factor` on `X' W X + sum_prior_Fisher`. For
   ill-conditioned designs a Givens-QR path on `[W^{1/2} X ; previous-R]`
