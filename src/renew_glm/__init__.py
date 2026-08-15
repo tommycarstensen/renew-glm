@@ -3,7 +3,7 @@
 A renewable estimator for generalized linear models with streaming data
 sets. Algorithm by Lan Luo and Peter X.-K. Song:
 
-  Luo L. & Song R. (2020). "Renewable Estimation and Incremental
+  Luo L. & Song P.X.-K. (2020). "Renewable Estimation and Incremental
   Inference in Generalized Linear Models with Streaming Data Sets."
   JRSS-B 82(1), 69-97. https://doi.org/10.1111/rssb.12352
 
@@ -19,9 +19,15 @@ Public API:
               wrapper if you need them.
 """
 
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 
 from renew_glm._irls import RenewGLM
 
 __all__ = ["RenewGLM"]
-__version__ = version("renew-glm")
+
+try:
+    __version__ = version("renew-glm")
+except PackageNotFoundError:
+    # Imported from a source tree that was never installed, e.g. a checkout on
+    # sys.path. Without this guard the import itself raises.
+    __version__ = "0.0.0.dev0"
