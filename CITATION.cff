@@ -20,13 +20,12 @@ date-released: "2026-08-15"
 license: GPL-2.0-or-later
 repository-code: "https://github.com/tommycarstensen/renew-glm"
 url: "https://github.com/tommycarstensen/renew-glm"
-# Concept DOI: always resolves to the latest version, so it need not change
-# per release. Version-specific DOIs are listed under identifiers.
+# Concept DOI only. It always resolves to the newest release, so it never goes
+# stale. A version DOI is deliberately not listed here: Zenodo mints it only
+# after the tag is archived, so any value committed before a release is by
+# construction the previous release's, which is how this file and coxstream's
+# both drifted. Cite the concept DOI; Zenodo shows the per-version DOIs.
 doi: "10.5281/zenodo.21950314"
-identifiers:
-  - type: doi
-    value: "10.5281/zenodo.21950315"
-    description: "Version DOI for v0.1.2"
 references:
   - type: article
     title: "Renewable estimation and incremental inference in generalized linear models with streaming data sets"
