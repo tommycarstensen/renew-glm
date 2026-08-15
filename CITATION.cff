@@ -14,7 +14,8 @@ authors:
     orcid: "https://orcid.org/0000-0002-3672-9931"
     affiliation: "Benros Research Group"
     email: "zenodo@tommycarstensen.com"
-version: "0.1.1"
+version: "0.1.2"
+date-released: "2026-08-15"
 license: GPL-2.0-or-later
 repository-code: "https://github.com/tommycarstensen/renew-glm"
 url: "https://github.com/tommycarstensen/renew-glm"
