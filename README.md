@@ -143,7 +143,7 @@ Deferred to keep the first release minimal; pull requests welcome.
 - **Algorithm** by Lan Luo and Peter X.-K. Song. Please cite the original
   paper when using this package:
 
-  > Luo L. & Song R. (2020). "Renewable Estimation and Incremental
+  > Luo L. & Song P.X.-K. (2020). "Renewable Estimation and Incremental
   > Inference in Generalized Linear Models with Streaming Data Sets."
   > *Journal of the Royal Statistical Society: Series B*, **82**(1),
   > 69-97. <https://doi.org/10.1111/rssb.12352>

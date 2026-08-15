@@ -1,7 +1,7 @@
 """
 Renewable (incremental) GLM -- Python reimplementation of Luo & Song (2020).
 
-Luo L. & Song R. (2020). Renewable Estimation and Incremental Inference in
+Luo L. & Song P.X.-K. (2020). Renewable Estimation and Incremental Inference in
 Generalized Linear Models with Streaming Data Sets. JRSS-B 82(1), 69-97.
 DOI: https://doi.org/10.1111/rssb.12352
 Original R package: https://github.com/luolsph/RenewGLM_pkg

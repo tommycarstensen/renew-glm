@@ -5,8 +5,9 @@ abstract: >-
   renew-glm fits generalized linear models on datasets larger than RAM using the
   renewable estimation of Luo and Song (2020). One pass per iteration accumulates
   the sufficient statistics, so peak memory scales with the number of covariates
-  rather than the number of observations. Gaussian, binomial and Poisson families,
-  agreeing with statsmodels to machine precision.
+  rather than the number of observations. It supports the gaussian, binomial and
+  Poisson families, and its estimates are checked against statsmodels in the test
+  suite.
 type: software
 authors:
   - family-names: Carstensen
