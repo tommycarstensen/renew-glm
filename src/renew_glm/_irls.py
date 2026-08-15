@@ -250,7 +250,20 @@ class RenewGLM:
             W_new = _weights(_eta(X, beta), self.family)
             sum2 = sum2 + _xtWx(X, W_new)
 
-        sum2_inv = np.linalg.inv(sum2)
+        # Every other solve here goes through _solve_spd, which falls back
+        # from Cholesky to LU to lstsq. An explicit inverse cannot do that, so
+        # a singular information matrix (collinear design, or binomial
+        # separation) would surface as a bare LinAlgError after the
+        # coefficients had already converged.
+        try:
+            sum2_inv = np.linalg.inv(sum2)
+        except np.linalg.LinAlgError as exc:
+            raise np.linalg.LinAlgError(
+                "Fisher information matrix is singular, so standard errors "
+                "cannot be computed. The design is likely collinear, or a "
+                "binomial fit has separated. coef_ from fit_streaming does not "
+                "require this inverse."
+            ) from exc
         if self.family == "gaussian":
             se = np.sqrt(np.diag(sum2_inv) * max(phi, 0.0))
         else:

@@ -44,9 +44,9 @@ O(p^2) state regardless of n.
 
 Other Python GLM options exist with different trade-offs:
 
-- **`glum`** (Quantco) -- fast in-memory; bit-identical to the
-  closed-form MLE we get, but caps out where the full design matrix
-  fits in RAM, same as statsmodels. Recommended *if* your `n` fits.
+- **`glum`** (Quantco) -- fast in-memory; agrees with our estimates to
+  ~1e-10 (see Correctness below), but caps out where the full design
+  matrix fits in RAM, same as statsmodels. Recommended *if* your `n` fits.
 - **`dask-glm`** -- distributed; useful at multi-machine scale, has
   scheduler overhead at single-host scale.
 - **`pyglmnet`** -- gradient-based, regularization-focused; supports
@@ -68,7 +68,7 @@ step, no platform-specific wheels.
 
 ## Correctness
 
-Across seven independent implementations spanning Python (NumPy / Numba
+Across independent implementations spanning Python (NumPy / Numba
 / JAX), an in-memory Python competitor (glum), a distributed Python
 competitor (dask-glm), and a cross-language reference (R's biglm), the
 coefficient estimates agree to floating-point machine epsilon
@@ -77,9 +77,11 @@ benchmark figure above shows pairwise `log10(max|beta_i - beta_j|)`:
 renew-glm hits FP epsilon (-15) against the streaming-Cholesky
 cluster; in-memory references (`glum`, `statsmodels`,
 `glm` (R)) sit one order out at -10/-11 (algorithm-decomposition
-path, not convergence). The JAX backend uses `jax_enable_x64=True`
--- the silent-float32 default would land an order of magnitude
-looser.
+path, not convergence). The JAX implementation in that comparison sets
+`jax_enable_x64=True`; the silent-float32 default would land an order of
+magnitude looser. Note that the Numba and JAX implementations are
+benchmark comparators only. The released package ships the NumPy path
+alone, as `renew_glm.__doc__` states.
 
 ## Scaling
 
