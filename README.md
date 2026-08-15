@@ -75,7 +75,7 @@ coefficient estimates agree to floating-point machine epsilon
 (`~1e-15`) on the largest workload we test. The heatmap inset in the
 benchmark figure above shows pairwise `log10(max|beta_i - beta_j|)`:
 renew-glm hits FP epsilon (-15) against the streaming-Cholesky
-cluster; in-memory in-memory references (`glum`, `statsmodels`,
+cluster; in-memory references (`glum`, `statsmodels`,
 `glm` (R)) sit one order out at -10/-11 (algorithm-decomposition
 path, not convergence). The JAX backend uses `jax_enable_x64=True`
 -- the silent-float32 default would land an order of magnitude
